@@ -3,284 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wana Decrypt0r 2.0</title>
+    <title>Acceso al Panel de Recuperación</title>
     <style>
         body {
-            background-color: #d4d0c8;
-            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            user-select: none;
-            overflow: hidden;
-            transition: background-color 0.2s ease;
+            margin: 0;
         }
-
-        /* FASE 1: Ventana Outlook */
-        .window {
-            background-color: #d4d0c8;
-            border: 2px solid;
-            border-color: #ffffff #404040 #404040 #ffffff;
-            width: 600px;
-            box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
-            color: #000000;
-        }
-        .title-bar {
-            background: linear-gradient(90deg, #000080, #1084d0);
-            color: white;
-            padding: 4px 6px;
-            font-weight: bold;
-            font-size: 13px;
-        }
-        .mail-header {
-            padding: 10px;
-            border-bottom: 2px inset #ffffff;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        .mail-body {
-            background-color: #ffffff;
-            margin: 10px;
-            padding: 15px;
-            border: 2px inset #ffffff;
-            height: 150px;
-            font-size: 14px;
-        }
-        .attachment {
-            display: inline-flex;
-            align-items: center;
-            margin-top: 15px;
-            padding: 6px;
-            border: 1px dashed #808080;
-            cursor: pointer;
-            background-color: #f1efe9;
-        }
-        .attachment-icon {
-            font-size: 24px;
-            margin-right: 8px;
-        }
-
-        /* FASE 2: Interfaz WannaCry */
-        #wannacry-window {
-            display: none;
-            width: 95vw;
-            max-width: 900px;
-            height: 85vh;
-            max-height: 600px;
-            background-color: #ebebeb;
-            border: 4px solid #b0b0b0;
-            color: #000000;
-            box-shadow: 5px 5px 25px rgba(0,0,0,0.7);
-        }
-        .header {
-            background-color: #ffffff;
-            padding: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            border-bottom: 2px solid #b0b0b0;
-        }
-        .main-content {
-            display: flex;
-            height: calc(100% - 60px);
-        }
-        .left-panel {
-            width: 35%;
-            background-color: #7d0c0c;
-            color: #ffffff;
-            padding: 15px;
+        .login-box {
+            background-color: #2d2d2d;
+            border: 2px solid #ff3333;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.2);
+            width: 100%;
+            max-width: 400px;
             box-sizing: border-box;
-            border-right: 3px solid #b0b0b0;
-            font-size: 12px;
-            overflow-y: auto;
-        }
-        .timer-box {
-            background-color: #222222;
-            border: 2px solid #ffffff;
-            padding: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .timer-title {
-            color: #ffff00;
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-        .clock {
-            font-family: "Courier New", monospace;
-            font-size: 22px;
-            font-weight: bold;
-        }
-        .right-panel {
-            width: 65%;
-            background-color: #ffffff;
-            padding: 20px;
-            overflow-y: auto;
-            box-sizing: border-box;
-            font-size: 13px;
-            line-height: 1.5;
         }
         h2 {
-            color: #7d0c0c;
-            font-size: 16px;
             margin-top: 0;
-            border-bottom: 1px solid #7d0c0c;
-            padding-bottom: 3px;
-        }
-        .form-section {
-            background-color: #f5f5f5;
-            border: 1px solid #cccccc;
-            padding: 15px;
-            margin-top: 15px;
+            color: #ff3333;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 25px;
         }
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
-        .form-group label {
+        label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #cccccc;
         }
-        .form-group input[type="email"] {
+        input[type="email"], input[type="text"] {
             width: 100%;
-            padding: 6px;
+            padding: 10px;
+            border: 1px solid #555555;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border-radius: 4px;
             box-sizing: border-box;
-            border: 1px solid #b0b0b0;
-            font-family: inherit;
+            font-size: 14px;
         }
-        .btn-action {
-            background-color: #7d0c0c;
+        input:focus {
+            outline: none;
+            border-color: #ff3333;
+        }
+        .btn-submit {
+            background-color: #ff3333;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 12px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            text-transform: uppercase;
+            margin-top: 10px;
+            transition: background-color 0.2s;
         }
-        .btn-action:hover {
-            background-color: #a31010;
+        .btn-submit:hover {
+            background-color: #cc2424;
         }
     </style>
 </head>
 <body>
 
-<!-- Fase 1: Simulación de Correo Outlook -->
-<div class="window" id="mail-window">
-    <div class="title-bar">
-        <span>ILOVEYOU - Microsoft Outlook Express</span>
-    </div>
-    <div class="mail-header">
-        <strong>De:</strong> loveletter@internet-mail.com<br>
-        <strong>Asunto:</strong> <span style="color: red; font-weight: bold;">ILOVEYOU</span>
-    </div>
-    <div class="mail-body">
-        kindly check the LOVE-LETTER-FOR-YOU.TXT from me.
-        <br><br>
-        <div class="attachment" id="btn-detonator">
-            <span class="attachment-icon">📜</span>
-            <div>
-                <strong>LOVE-LETTER-FOR-YOU.TXT.vbs</strong><br>
-                <small>Tamaño: 10 KB (Script de Visual Basic)</small>
-            </div>
+<div class="login-box">
+    <h2>VINCULACIÓN DE CUENTA</h2>
+    <form id="simulation-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+            <label for="user-name">Nombre de Usuario:</label>
+            <input type="text" id="user-name" placeholder="Ej: Administrador" required autocomplete="off">
         </div>
-    </div>
-</div>
+        
+        <div class="form-group">
+            <label for="user-email">Correo Electrónico:</label>
+            <input type="email" id="user-email" placeholder="ejemplo@correo.com" required autocomplete="off">
+        </div>
 
-<!-- Fase 2: Simulación Interfaz WannaCry -->
-<div id="wannacry-window">
-    <div class="header">Wana Decrypt0r 2.0</div>
-    <div class="main-content">
-        <div class="left-panel">
-            <div style="text-align:center; font-size: 40px; margin-bottom:10px;">🔒</div>
-            <div class="timer-box">
-                <div class="timer-title">El precio aumentará en:</div>
-                <div class="clock" id="timer-raise">02:23:59:59</div>
-            </div>
-            <div class="timer-box">
-                <div class="timer-title">Tus archivos se perderán el:</div>
-                <div class="clock" id="timer-loss">06:23:59:59</div>
-            </div>
-            <p><b>¿Qué puedo hacer?</b><br>Sus archivos importantes han sido cifrados mediante algoritmos matemáticos avanzados.</p>
-        </div>
-        <div class="right-panel">
-            <h2>¿Qué pasó con mi computadora?</h2>
-            <p>Sus archivos importantes están cifrados. Muchas de sus fotos, videos, documentos y bases de datos ya no son accesibles porque han sido encriptados de forma segura.</p>
-            
-            <h2>¿Cómo restauro mi sistema?</h2>
-            <p>Para verificar el estado de su clave de cifrado única asignada a este equipo, vincule su cuenta de correo para recibir las instrucciones del servidor de descifrado.</p>
-            
-            <!-- Formulario Falso de Correo Electrónico -->
-            <div class="form-section">
-                <div class="form-group">
-                    <label for="fake-email">Dirección de correo electrónico asociada:</label>
-                    <input type="email" id="fake-email" placeholder="ejemplo@correo.com" autocomplete="off">
-                </div>
-                <button class="btn-action" id="btn-check">Verificar Servidor de Claves</button>
-            </div>
-        </div>
-    </div>
+        <button type="submit" class="btn-submit" id="btn-text">Conectar Servidor</button>
+    </form>
 </div>
 
 <script>
-    const detonator = document.getElementById('btn-detonator');
-    const mailWindow = document.getElementById('mail-window');
-    const wcWindow = document.getElementById('wannacry-window');
-    const checkBtn = document.getElementById('btn-check');
-    const fakeEmailInput = document.getElementById('fake-email');
+    function handleFormSubmit(event) {
+        // Evita que la página se recargue realmente al enviar el formulario
+        event.preventDefault(); 
+        
+        const btn = document.getElementById('btn-text');
+        btn.innerText = "Conectando...";
+        btn.disabled = true;
 
-    detonator.addEventListener('click', () => {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        }
-
-        mailWindow.style.display = 'none';
-        document.body.style.backgroundColor = "#7d0c0c";
-        wcWindow.style.display = 'block';
-
-        iniciarContador('timer-raise', 259200); // 3 días
-        iniciarContador('timer-loss', 604800);  // 7 días
-    });
-
-    // Acción simulada al enviar el correo falso
-    checkBtn.addEventListener('click', () => {
-        if (fakeEmailInput.value.trim() === "") {
-            alert("Por favor, introduzca una dirección de correo válida para la comprobación.");
-        } else {
-            alert("ERROR: Conexión con el servidor de claves rechazada. El puerto de descifrado está cerrado.");
-        }
-    });
-
-    function iniciarContador(id, segundosTotales) {
-        const elemento = document.getElementById(id);
-        let restantes = segundosTotales;
-
-        const reloj = setInterval(() => {
-            if (restantes <= 0) {
-                clearInterval(reloj);
-                return;
-            }
-            restantes--;
-
-            let d = Math.floor(restantes / (24 * 3600));
-            let h = Math.floor((restantes % (24 * 3600)) / 3600);
-            let m = Math.floor((restantes % 3600) / 60);
-            let s = restantes % 60;
-
-            elemento.innerText = 
-                String(d).padStart(2, '0') + ":" +
-                String(h).padStart(2, '0') + ":" +
-                String(m).padStart(2, '0') + ":" +
-                String(s).padStart(2, '0');
-        }, 1000);
+        // Simula una espera de red de 1.5 segundos antes de lanzar el fallo visual
+        setTimeout(() => {
+            alert("ERROR CRÍTICO: El servidor remoto rechazó la solicitud de vinculación. Código de error: 0x80070005 (Acceso denegado).");
+            btn.innerText = "Conectar Servidor";
+            btn.disabled = false;
+        }, 1500);
     }
-
-    window.onbeforeunload = function() {
-        return "Simulación de script activa.";
-    };
 </script>
 
 </body>
