@@ -1,114 +1,125 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso al Panel de Recuperación</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wana Decrypt0r 2.0</title>
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-box {
-            background-color: #2d2d2d;
-            border: 2px solid #ff3333;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.2);
-            width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
-        }
-        h2 {
-            margin-top: 0;
-            color: #ff3333;
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 25px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #cccccc;
-        }
-        input[type="email"], input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #555555;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        input:focus {
-            outline: none;
-            border-color: #ff3333;
-        }
-        .btn-submit {
-            background-color: #ff3333;
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.2s;
-        }
-        .btn-submit:hover {
-            background-color: #cc2424;
-        }
+        body { background-color: #7d0c0c; font-family: "Segoe UI", Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; color: #ffffff; user-select: none; overflow: hidden; cursor: none; }
+        #launcher { font-size: 24px; background-color: #222; padding: 30px; border: 3px solid #ff0000; cursor: pointer; text-align: center; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #wannacry-window { display: none; width: 900px; height: 600px; background-color: #ebebeb; border: 4px solid #b0b0b0; color: #000000; box-shadow: 5px 5px 25px rgba(0,0,0,0.7); }
+        .header { background-color: #ffffff; padding: 15px; font-size: 26px; font-weight: bold; text-align: center; color: #000000; border-bottom: 2px solid #b0b0b0; }
+        .main-content { display: flex; height: calc(100% - 65px); }
+        .left-panel { width: 320px; background-color: #7d0c0c; color: #ffffff; padding: 15px; box-sizing: border-box; border-right: 3px solid #b0b0b0; font-size: 13px; }
+        .timer-box { background-color: #222222; border: 2px solid #ffffff; padding: 10px; margin-bottom: 20px; text-align: center; }
+        .timer-title { color: #ffff00; font-weight: bold; margin-bottom: 5px; }
+        .clock { font-family: "Courier New", monospace; font-size: 28px; font-weight: bold; color: #ffffff; }
+        .right-panel { flex: 1; background-color: #ffffff; padding: 20px; overflow-y: auto; box-sizing: border-box; font-size: 14px; line-height: 1.5; }
+        h2 { color: #7d0c0c; font-size: 18px; margin-top: 0; border-bottom: 1px solid #7d0c0c; padding-bottom: 5px; }
+        .btc-section { background-color: #f5f5f5; border: 1px solid #cccccc; padding: 10px; margin-top: 15px; display: flex; align-items: center; justify-content: space-between; }
+        .pay-form-container { background-color: #f5f5f5; border: 1px solid #cccccc; padding: 15px; margin-top: 20px; border-radius: 4px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #333333; }
+        .form-group input { width: 100%; padding: 8px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; }
+        .btn-green-redirect { background-color: #2e7d32; color: white; border: none; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; border-radius: 4px; font-size: 15px; margin-top: 15px; }
+        #black-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000000; color: #ff0000; font-family: monospace; font-size: 20px; z-index: 999999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-<div class="login-box">
-    <h2>VINCULACIÓN DE CUENTA</h2>
-    <form id="simulation-form" onsubmit="handleFormSubmit(event)">
-        <div class="form-group">
-            <label for="user-name">Nombre de Usuario:</label>
-            <input type="text" id="user-name" placeholder="Ej: Administrador" required autocomplete="off">
-        </div>
-        
-        <div class="form-group">
-            <label for="user-email">Correo Electrónico:</label>
-            <input type="email" id="user-email" placeholder="ejemplo@correo.com" required autocomplete="off">
-        </div>
+<div id="launcher">⚠️ ATENCIÓN: El sistema requiere una verificación.<br><small style="font-size:15px; color:#aaa;">Haga clic aquí para comenzar.</small></div>
 
-        <button type="submit" class="btn-submit" id="btn-text">Conectar Servidor</button>
-    </form>
+<div id="wannacry-window">
+    <div class="header">Wana Decrypt0r 2.0</div>
+    <div class="main-content">
+        <div class="left-panel">
+            <div style="text-align:center; font-size: 50px; margin-bottom:10px;">🔒</div>
+            <div class="timer-box"><div class="timer-title">El precio aumentará en:</div><div class="clock" id="timer-raise">02:23:59:59</div></div>
+            <div class="timer-box"><div class="timer-title">Tus archivos se perderán el:</div><div class="clock" id="timer-loss">06:23:59:59</div></div>
+            <p><b>¿Qué puedo hacer?</b><br>Sus archivos importantes han sido cifrados mediante algoritmos avanzados.</p>
+        </div>
+        <div class="right-panel">
+            <h2>¿Qué pasó con mi computadora?</h2>
+            <p>Sus archivos importantes están cifrados. Fotos, videos, documentos ya no son accesibles.</p>
+            <div class="btc-section">
+                <div><strong>Enviar transferencia simulada a:</strong><br><code style="background:#fff; padding:2px 5px; border:1px solid #bbb; font-size:12px;">12t9YDPgwueZ9Ny86QvAZRZW9XzzndMMB6</code></div>
+            </div>
+            <form id="pay-form" onsubmit="executeSequence(event)">
+                <div class="pay-form-container">
+                    <div class="form-group"><label>Nombre de Usuario:</label><input type="text" required autocomplete="off"></div>
+                    <div class="form-group"><label>Correo Electrónico:</label><input type="email" required autocomplete="off"></div>
+                    <button type="submit" class="btn-green-redirect" id="btn-text">Proceder al apartado de pago</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="black-screen">
+    <div>
+        [!] CRITICAL ERROR: TRANSACTION_VALIDATION_FAILED<br>
+        [!] CODES: 0x00000050 // MBR_ERASED<br><br>
+        <span style="color:#ffffff; font-size:16px;">No se ha detectado ninguna señal de entrada de hardware. El sistema operativo ha sido desmontado.</span>
+    </div>
 </div>
 
 <script>
-    function handleFormSubmit(event) {
-        // Evita que la página se recargue realmente al enviar el formulario
-        event.preventDefault(); 
-        
-        const btn = document.getElementById('btn-text');
-        btn.innerText = "Conectando...";
-        btn.disabled = true;
+    const launcher = document.getElementById('launcher'); 
+    const windowWC = document.getElementById('wannacry-window');
+    const blackScreen = document.getElementById('black-screen');
+    let isTriggered = false;
 
-        // Simula una espera de red de 1.5 segundos antes de lanzar el fallo visual
-        setTimeout(() => {
-            alert("ERROR CRÍTICO: El servidor remoto rechazó la solicitud de vinculación. Código de error: 0x80070005 (Acceso denegado).");
-            btn.innerText = "Conectar Servidor";
-            btn.disabled = false;
-        }, 1500);
+    launcher.addEventListener('click', () => {
+        isTriggered = true;
+        forceFullscreen();
+        launcher.style.display = 'none'; 
+        windowWC.style.display = 'block';
+        startCountdown(259200, 604800); 
+    });
+
+    function forceFullscreen() {
+        if (!isTriggered) return;
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(() => {});
+        }
     }
-</script>
 
+    // BÚCULO AGRESIVO: Si mueve el ratón o hace clic tras salir de pantalla completa, se vuelve a maximizar solo
+    document.addEventListener('mousemove', forceFullscreen);
+    document.addEventListener('click', forceFullscreen);
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'F5' || (e.ctrlKey && e.key === 'r') || e.key === 'F11') {
+            e.preventDefault();
+        }
+        forceFullscreen();
+    });
+
+    function executeSequence(event) {
+        event.preventDefault();
+        alert("ERROR DE VALIDACIÓN:\n\nNo se ha encontrado su pago en la red.\n\nTiempo de gracia cancelado.");
+        
+        document.getElementById('timer-raise').innerText = "00:00:00:00";
+        document.getElementById('timer-loss').innerText = "00:00:00:00";
+
+        setTimeout(() => {
+            windowWC.style.display = 'none';
+            document.body.style.backgroundColor = "#000000";
+            blackScreen.style.display = "flex";
+            forceFullscreen();
+        }, 1000);
+    }
+
+    function startCountdown(secRaise, secLoss) {
+        const cl1 = document.getElementById('timer-raise'), cl2 = document.getElementById('timer-loss');
+        setInterval(() => {
+            if (secRaise > 0) secRaise--; if (secLoss > 0) secLoss--;
+            let d1 = Math.floor(secRaise / 86400), h1 = Math.floor((secRaise % 86400) / 3600), m1 = Math.floor((secRaise % 3600) / 60), s1 = secRaise % 60;
+            cl1.innerText = String(d1).padStart(2,'0')+":"+String(h1).padStart(2,'0')+":"+String(m1).padStart(2,'0')+":"+String(s1).padStart(2,'0');
+            let d2 = Math.floor(secLoss / 86400), h2 = Math.floor((secLoss % 86400) / 3600), m2 = Math.floor((secLoss % 3600) / 60), s2 = secLoss % 60;
+            cl2.innerText = String(d2).padStart(2,'0')+":"+String(h2).padStart(2,'0')+":"+String(m2).padStart(2,'0')+":"+String(s2).padStart(2,'0');
+        }, 1000);
+    }
+    window.onbeforeunload = function() { return "Alerta"; };
+</script>
 </body>
 </html>
