@@ -22,6 +22,14 @@
         .form-group input { width: 100%; padding: 8px; border: 1px solid #bbb; border-radius: 4px; box-sizing: border-box; }
         .btn-green-redirect { background-color: #2e7d32; color: white; border: none; padding: 15px; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; border-radius: 4px; font-size: 15px; margin-top: 15px; }
         #black-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000000; color: #ff0000; font-family: monospace; font-size: 20px; z-index: 999999; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; }
+
+        /* Cuadro de Alerta Falso (No rompe la Pantalla Completa) */
+        #fake-alert { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 420px; background-color: #f0f0f0; border: 1px solid #8e8e8e; box-shadow: 0 4px 15px rgba(0,0,0,0.4); color: #000000; z-index: 100000; padding: 1px; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        .alert-title { background: #ffffff; padding: 6px 10px; font-size: 12px; font-weight: bold; color: #333333; display: flex; justify-content: space-between; }
+        .alert-body { padding: 20px; font-size: 14px; line-height: 1.4; background-color: #ffffff; border-bottom: 1px solid #dfdfdf; }
+        .alert-footer { padding: 8px; text-align: right; background-color: #f0f0f0; }
+        .alert-btn { background-color: #e1e1e1; border: 1px solid #adadad; padding: 5px 25px; cursor: pointer; font-size: 13px; }
+        .alert-btn:hover { background-color: #e5f1fb; border-color: #0078d7; }
     </style>
 </head>
 <body>
@@ -43,7 +51,7 @@
             <div class="btc-section">
                 <div><strong>Enviar transferencia simulada a:</strong><br><code style="background:#fff; padding:2px 5px; border:1px solid #bbb; font-size:12px;">12t9YDPgwueZ9Ny86QvAZRZW9XzzndMMB6</code></div>
             </div>
-            <form id="pay-form" onsubmit="executeSequence(event)">
+            <form id="pay-form" onsubmit="triggerFakeAlert(event)">
                 <div class="pay-form-container">
                     <div class="form-group"><label>Nombre de Usuario:</label><input type="text" required autocomplete="off"></div>
                     <div class="form-group"><label>Correo Electrónico:</label><input type="email" required autocomplete="off"></div>
@@ -51,6 +59,19 @@
                 </div>
             </form>
         </div>
+    </div>
+</div>
+
+<!-- Elemento del Cuadro de Diálogo Falso -->
+<div id="fake-alert">
+    <div class="alert-title"><span>Mensaje del Sistema</span><span>✕</span></div>
+    <div class="alert-body">
+        <strong style="color:#cc0000;">ERROR DE VALIDACIÓN:</strong><br><br>
+        No se ha encontrado ningún registro de pago asociado en la red Blockchain.<br><br>
+        Tiempo de gracia cancelado por intento de evasión.
+    </div>
+    <div class="alert-footer">
+        <button class="alert-btn" onclick="closeAlertAndCrash()">Aceptar</button>
     </div>
 </div>
 
@@ -66,6 +87,7 @@
     const launcher = document.getElementById('launcher'); 
     const windowWC = document.getElementById('wannacry-window');
     const blackScreen = document.getElementById('black-screen');
+    const fakeAlert = document.getElementById('fake-alert');
     let isTriggered = false;
 
     launcher.addEventListener('click', () => {
@@ -83,7 +105,6 @@
         }
     }
 
-    // BÚCULO AGRESIVO: Si mueve el ratón o hace clic tras salir de pantalla completa, se vuelve a maximizar solo
     document.addEventListener('mousemove', forceFullscreen);
     document.addEventListener('click', forceFullscreen);
     
@@ -94,9 +115,15 @@
         forceFullscreen();
     });
 
-    function executeSequence(event) {
+    // Muestra la ventana de error falsa interna (No altera el estado de la pantalla completa)
+    function triggerFakeAlert(event) {
         event.preventDefault();
-        alert("ERROR DE VALIDACIÓN:\n\nNo se ha encontrado su pago en la red.\n\nTiempo de gracia cancelado.");
+        fakeAlert.style.display = 'block';
+    }
+
+    // Al pulsar "Aceptar" en la alerta falsa, se ejecutan los relojes a cero y el fundido negro
+    function closeAlertAndCrash() {
+        fakeAlert.style.display = 'none';
         
         document.getElementById('timer-raise').innerText = "00:00:00:00";
         document.getElementById('timer-loss').innerText = "00:00:00:00";
@@ -106,7 +133,7 @@
             document.body.style.backgroundColor = "#000000";
             blackScreen.style.display = "flex";
             forceFullscreen();
-        }, 1000);
+        }, 1200);
     }
 
     function startCountdown(secRaise, secLoss) {
